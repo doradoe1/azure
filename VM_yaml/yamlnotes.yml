@@ -1,0 +1,43 @@
+##YAML = YAML ain't markup language##
+##Supports comments, yay. No commas here. Tab, space, colons (:), no spaces at the end.##
+## - is used to establish collections.##
+## Use ' ' to create a string with more than one argument##
+##Indent with tab to add additional properties.##
+##Two ways to do multiple strings: | and >. The > convers to one single line. The | preserves the format.##
+
+##EX:##
+##Objects:
+  ##properties:
+person:
+    name: Ciel
+    height:
+      feet: 5
+      inches: 5
+    hobbies:
+      - Soccer
+      - Violin
+      - Swords:
+          Japan: Katana
+          China: Jian
+          Europe: 'Buster Sword'
+      - Martial Arts
+      - Mathematics
+      - Cross Country 
+    poems: |
+      To see a World in a Grain of Sand 
+      And a Heaven in a Wild Flower, 
+      Hold Infinity in the palm of your hand 
+      And Eternity in an hour.
+    quotes: > 
+      A truth that's told with bad intent
+      Beats all the lies you can invent.
+
+
+runcmd: 
+  - brew install gcc
+  - brew install node
+  - brew install azure-cli
+  - brew install git
+  - $script.sh $1 $2 ... $n
+
+  az vm create -g Thursday-rg -n celestebailey --custom-data ./cloudinit.txt --image UbuntuLTS
