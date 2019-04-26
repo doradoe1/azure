@@ -8,11 +8,11 @@ echo "Azure missing. Install azure. Run brew install azure-cli and try again" 1>
 exit 1
 fi
 
-username=$1
-displayname=$2
-domain=$3
+read -p "Enter the a login username: " username
+read -p "Enter the username of the user you want to update: " displayname
+read -p "Enter the domain of the username: " domain
 userprincipalname=$displayname@$domain
-role=$4
+read -p "Enter the role that you want to delete: " role
 
 ##Step One: Login into Azure.##
 az login -u $username
@@ -28,7 +28,6 @@ fi
 echo "User Validated"
 
 ##Step Three: Delete the role.##
-
 if [ -z $userprincipalname ]; then
 echo "Invalid username. Please provide an existing username." 1>&2
 exit 1
@@ -39,4 +38,4 @@ fi
 
 echo "Deleting role. Please wait..."
 az role assignment delete --assignee $userprincipalname --role $role
-echo "Role assigned"
+echo "Role deleted"

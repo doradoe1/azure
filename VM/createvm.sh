@@ -12,7 +12,7 @@ fi
 read -p "Enter the resource group: " resourcegroup
 read -p "Enter a location for resource group: " location
 read -p "Enter a name for the VM: " vmname
-read -p "Enter the image: UbuntuLTS, Centos, Devian, or Win2019Datacenter " image
+read -p "Enter the image: UbuntuLTS, Centos, Devian, or Win2019Datacenter, or a stored image " image
 read -p "Enter the size: " size
 
 ##Create a resource group. Check if resource group already exists. If so, skip.##
