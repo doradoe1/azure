@@ -10,7 +10,9 @@ read -p "Enter a name for the image: " imagename
 ##read -p "Enter the os type (Linux or Windows): " ostype
 ##read -p "Enter the size: " size
 
-az vm stop --name $vmname --resource-group $resourcegroup
+az vm stop \
+--name $vmname \
+--resource-group $resourcegroup
 
 az vm deallocate \
 --resource-group $resourcegroup \

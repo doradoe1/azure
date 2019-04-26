@@ -8,8 +8,8 @@ packages:
   - nodejs
   - npm
 write_files:
-  - owner: ciel:ciel
-    path: /home/ciel/index.js
+  - owner: celeste:celeste
+    path: /home/celeste/index.js
     content: |
         const http = require('http');
 
@@ -26,7 +26,10 @@ write_files:
             console.log(`Server running at http://${hostname}:${port}/`);
         });
 runcmd:
-  - cd "/home/ciel"
+  - cd "/home/celeste"
   - npm init
   - npm install express -y
   - nodejs index.js
+
+
+  ##Owner and directory names vary depend on user and VM names. Modify as needed. The user of this VM is celeste.##
