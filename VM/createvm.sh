@@ -8,39 +8,30 @@ echo "Azure missing. Install azure. Run brew install azure-cli and try again" 1>
 exit 1
 fi
 
-username=$1
-resourcegroup=$2
-location=$3
-vmname=$4
-image=$5
-size=$6
+##Parameters.##
+read -p "Enter the resource group: " resourcegroup
+read -p "Enter a location for resource group: " location
+read -p "Enter a name for the VM: " vmname
+read -p "Enter the image: UbuntuLTS, Centos, Devian, or Win2019Datacenter " image
+read -p "Enter the size: " size
 
-##Step One: Login into Azure.##
-
-az login -u $username
-
-##Step Two: Verify that user has admin credentials to continue.##
-
-echo "Verifying for Administrator Credentials. Please wait..."
-
-check=$(az role assignment list  --include-classic-administrators \
---query "[?id=='NA(classic admins)'].principalName" | grep -E $username)
-if [ -z $check ]; then
-echo "You must have administrator credentials to use access this functionality" 1>&2
-exit 1
+##Create a resource group. Check if resource group already exists. If so, skip.##
+verifyrg=$(az group exists --name $resourcegroup | grep -E true)
+if [ $verifyvrg=true ]; then
+echo "Resource group already exists." 0>&2
+else
+az group create --name $resourcegroup --location $location
+exit 0
 fi
 
-##Step Three: Create a resource group.##
-az group create --name $resourcegroup --location $location
-
-##Step Four: Create a VM.##
+##Create a VM.##
 ##Verify that there are no duplicates for the VM.##
 ##ssh keys are stored in /.ssh directory.##
 ##If no location is given, it defaults to the location given in the resource group.##
 
-check1=$(az vm show --resource-group $resourcegroup --name $vmname | grep -E $vmname)
-if [ -z $check1 ]; then
-echo "VM name already in use. Please choose a different name and try again." 1>$exit 1
+verifyvm=$(az vm show --resource-group $resourcegroup --name $vmname | grep -E $vmname)
+if [ -z $verifyvm ]; then
+echo "VM name already in use. Please choose a different name and try again." 1>&2
 else
 az vm create \
     --resource-group $resourcegroup \
@@ -51,4 +42,5 @@ az vm create \
     --admin-username $username \
     --no-wait
 echo "VM created. Thank you for using Azure."
+exit 0
 fi
