@@ -10,6 +10,12 @@ read -p "Enter a name for the image: " imagename
 ##read -p "Enter the os type (Linux or Windows): " ostype
 ##read -p "Enter the size: " size
 
+##You need to be signed-in into the VM that you want to image capture.##
+##Deprovision the VM and sign out:##
+sudo waagent -deprovision+user -y
+exit
+
+##Create the image:##
 az vm stop \
 --name $vmname \
 --resource-group $resourcegroup
@@ -34,3 +40,4 @@ az image create \
 az image list \
 --resource-group $resourcegroup \
 --output table 
+

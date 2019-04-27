@@ -42,5 +42,10 @@ az vm create \
     --admin-username $username \
     --no-wait
 echo "VM created. Thank you for using Azure."
+az vm show \
+--resource-group $resourcegroup \
+--name vmname \
+--show-details
+--output table
 exit 0
 fi
