@@ -18,7 +18,7 @@ verifyrg=$(az group exists \
 if [ $verifyvrg=true ]; then
 echo "Resource group Valid." 0>&2
 else
-echo "creating new resource group. Please wait."
+echo "Creating new resource group. Please wait."
 az group create --name $resourcegroup --location $location
 exit 0
 fi

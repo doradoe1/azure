@@ -9,7 +9,7 @@ read -p "Enter the data disk sources: " dds
 read -p "Enter a location for resource group: " location
 read -p "Enter the os disk caching (None, ReadOnly, or ReadWrite): " odc
 read -p "Enter the os type (Linux or Windows): " ostype
-read -p "Enter the size: " size
+read -p "Enter the size (Standard_B2s commonly used): " size
 
 -data-disk-sources $dds \
 --location $location \
