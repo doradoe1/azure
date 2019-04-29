@@ -8,23 +8,30 @@ echo "Azure missing. Install azure. Run brew install azure-cli and try again" 1>
 exit 1
 fi
 
+##Parameters:##
 read -p "Enter the a login username: " username
 read -p "Enter the username of the user you want to update: " displayname
 read -p "Enter the domain of the username: " domain
-userprincipalname=$displayname@$domain
 read -p "Enter the role that you want to delete: " role
+userprincipalname=$displayname@$domain
 
 ##Step One: Login into Azure.##
 az login -u $username
 
 ##Step Two: Verify that user has admin credentials to continue.##
+
 echo "Verifying for Administrator Credentials. Please wait..."
-check=$(az role assignment list  --include-classic-administrators \
---query "[?id=='NA(classic admins)'].principalName" | grep -E $username)
+
+check=$(az role assignment list  \
+--include-classic-administrators \
+--query "[?id=='NA(classic admins)'].principalName" \
+| grep -E $username)
+
 if [ -z $check ]; then
 echo "You must have administrator credentials to use access this functionality" 1>&2
 exit 1
 fi
+
 echo "User Validated"
 
 ##Step Three: Delete the role.##
@@ -37,5 +44,9 @@ exit 1
 fi
 
 echo "Deleting role. Please wait..."
-az role assignment delete --assignee $userprincipalname --role $role
+
+az role assignment delete \
+--assignee $userprincipalname 
+--role $role
+
 echo "Role deleted"

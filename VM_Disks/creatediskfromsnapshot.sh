@@ -9,5 +9,4 @@ read -p "Enter the name of the source disk (snapshot): " snapshotdisk
 az disk create \
 --resource-group $resourcegroup \
 --name $newdisk \
---source $snapshotdisk \
---no-wait
+--source $snapshotdisk

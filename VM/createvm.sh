@@ -2,12 +2,6 @@
 
 ##Script to create a brand new VM##
 
-##Check if azure is installed##
-if [ -z $(which az) ]; then
-echo "Azure missing. Install azure. Run brew install azure-cli and try again" 1>&2
-exit 1
-fi
-
 ##Parameters.##
 read -p "Enter the resource group: " resourcegroup
 read -p "Enter a location for resource group: " location
@@ -17,7 +11,10 @@ read -p "Enter the size (Standard_B2s commonly used): " size
 read -p "Enter the admin username for the VM: " username
 
 ##Create a resource group. Check if resource group already exists. If so, skip.##
-verifyrg=$(az group exists --name $resourcegroup | grep -E true)
+verifyrg=$(az group exists \
+--name $resourcegroup \
+| grep -E true)
+
 if [ $verifyvrg=true ]; then
 echo "Resource group Valid." 0>&2
 else
@@ -30,8 +27,12 @@ fi
 ##Verify that there are no duplicates for the VM.##
 ##ssh keys are stored in /.ssh directory.##
 ##Since no location is asked for, it defaults to the location given in the resource group.##
-verifyvm=$(az vm list --resource-group $resourcegroup -d --query [].name \
+verifyvm=$(az vm list \
+--resource-group $resourcegroup \
+-d \
+--query [].name \
 | grep -E $vmname)
+
 if [ -z $verifyvm ]; then
 az vm create \
 --resource-group $resourcegroup \
@@ -49,7 +50,7 @@ az vm show \
 --output table
 else
 echo "VM name already in use. Please choose a different name and try again." \
-1>&2
+0>&2
 az vm show \
 --resource-group $resourcegroup \
 --name $vmname \
